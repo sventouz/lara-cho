@@ -5,6 +5,12 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\ArticleRequest;
 
 class ArticlesController extends Controller {
+    public function __construct()
+    {
+        $this->middleware('auth')
+            ->except(['index', 'show']);
+    }
+    //
     public function index() {
         $articles = Article::latest('published_at')->latest('created_at')
             ->published()
@@ -23,7 +29,8 @@ class ArticlesController extends Controller {
     //
     public function store(ArticleRequest $request) {
         Article::create($request->validated());
-        return redirect('articles');
+        return redirect()->route('articles.index')
+            ->with('message', '記事を追加しました。');;
     }
     //
     public function edit($id) {
@@ -34,6 +41,13 @@ class ArticlesController extends Controller {
     public function update(ArticleRequest $request, $id) {
         $article = Article::findOrFail($id);
         $article->update($request->validated());
-        return redirect(url('articles', [$article->id]));
+        return redirect()->route('articles.show', [$article->$id])
+            ->with('message', '記事を編集しました。');
+    }
+    //
+    public function destroy($id) {
+        $article = Article::findOrFail($id);
+        $article->delete();
+        return redirect('articles')->with('message', '記事を削除しました。');
     }
 }
