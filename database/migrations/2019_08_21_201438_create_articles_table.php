@@ -6,16 +6,18 @@ class CreateArticlesTable extends Migration
 {
     public function up()
     {
-        Schema::create('articles', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            // $table->unsignedInteger('user_id');
+        Schema::create('articles', function(Blueprint $table)
+        {
+            $table->increments('id');
+            $table->unsignedBigInteger('user_id');
             $table->string('title');
             $table->text('body');
             $table->timestamps();
-            // $table->foreign('user_id')
-            //     ->references('id')
-            //     ->on('users')
-            //     ->onDelete('cascade');
+            // 外部キーを追加
+            $table->foreign('user_id')
+                ->references('id')
+                ->on('users')
+                ->onDelete('cascade');
         });
     }
     //

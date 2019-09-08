@@ -3,6 +3,7 @@ namespace App\Http\Controllers;
 use App\Article;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ArticleRequest;
+use Illuminate\Support\Facades\Auth;
 
 class ArticlesController extends Controller
 {
@@ -31,11 +32,10 @@ class ArticlesController extends Controller
         return view('articles.create');
     }
     //
-    public function store(ArticleRequest $request)
-    {
-        Article::create($request->validated());
+    public function store(ArticleRequest $request) {
+        Auth::user()->articles()->create($request->validated());
         return redirect()->route('articles.index')
-            ->with('message', '記事を追加しました。');;
+            ->with('message', '記事を追加しました。');
     }
     //
     public function edit($id)
