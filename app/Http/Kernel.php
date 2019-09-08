@@ -1,10 +1,7 @@
 <?php
-// app/Html/Kernel.php
- 
+// app/Html/Kernel.php 
 namespace App\Http;
- 
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
- 
 class Kernel extends HttpKernel
 {
     /**
@@ -21,7 +18,6 @@ class Kernel extends HttpKernel
         \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
         \App\Http\Middleware\TrustProxies::class,
     ];
- 
     /**
      * The application's route middleware groups.
      *
