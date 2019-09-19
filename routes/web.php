@@ -1,8 +1,11 @@
 <?php
 
-Route::get('/', 'PagesController@index');
-Route::get('contact', 'PagesController@contact');
-Route::get('about', 'PagesController@about');
+// 名前を指定した Route の書き方
+Route::get('about', 'PagesController@about')->name('about');
+Route::get('contact', 'PagesController@contact')->name('contact');
 
-Route::get('articles', 'ArticlesController@index');
-Route::get('articles/{id}', 'ArticlesController@show');
+Route::get('/', 'ArticlesController@index')->name('home');
+Route::resource('articles', 'ArticlesController');
+
+Auth::routes();
+Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
